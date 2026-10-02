@@ -1,0 +1,12 @@
+.team .wrap{padding-bottom:115px}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:45px}
+.team-card{background:var(--paper);padding:16px;border-radius:12px;position:relative;transition:.25s transform}
+.team-card:hover{transform:translateY(-4px)}
+.team-avatar{height:190px;border-radius:8px;display:flex;align-items:flex-end;padding:18px;font:700 38px var(--serif);color:#255e50;letter-spacing:-.06em}
+.t0{background:#d3e9df}
+.t1{background:#cddcaf}
+.t2{background:#f2d8c1}
+.t3{background:#c4d2db}
+.team-card h3{font-size:14px;margin:13px 0 3px}
+.team-card p{font-size:11px;color:var(--muted);margin:0}
+.team-card a{position:absolute;right:15px;bottom:15px;color:var(--green)}

@@ -1,0 +1,8 @@
+.partners{padding-top:55px;padding-bottom:55px}
+.partners>div{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:31px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;color:#687870}
+.partners b{font-size:20px;letter-spacing:-.06em}
+.partners b:nth-child(2){font-family:var(--serif);font-size:25px}
+.partners span{color:#4b9e87}
+.partners i{font-weight:400}
+@media (max-width:820px){.partners>div{flex-wrap:wrap;justify-content:center}}
+@media (max-width:500px){.partners b{font-size:16px}}
