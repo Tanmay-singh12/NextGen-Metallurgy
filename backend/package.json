@@ -1,8 +1,9 @@
 {
-  "name": "backend",
+  "name": "nextgen-materials-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend API for NextGen Materials Conference",
+  "type": "module",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.js",
@@ -21,6 +22,9 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.10.3",
     "morgan": "^1.12.1",
+    "multer": "^2.4.0",
+    "pdfkit": "^0.20.2",
+    "qrcode": "^1.5.4",
     "zod": "^4.6.5"
   },
   "devDependencies": {
