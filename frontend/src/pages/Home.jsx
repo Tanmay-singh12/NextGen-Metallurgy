@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 
 import Navbar from "../components/Navbar/Navbar";
@@ -15,6 +14,8 @@ import Partners from "../components/Partners/Partners";
 import Contact from "../components/Contact/Contact";
 import Footer from "../components/Footer/Footer";
 
+import SymposiumHeader from "../components/SymposiumHeader/SymposiumHeader";
+
 import RegistrationModal from "../components/RegistrationModal/RegistrationModal";
 import AbstractSubmissionModal from "../components/abstract/AbstractSubmissionModal";
 
@@ -23,6 +24,7 @@ import { gallery } from "../data/gallery";
 export default function Home() {
   const [menu, setMenu] = useState(false);
   const [lightbox, setLightbox] = useState(null);
+
   const [registrationOpen, setRegistrationOpen] = useState(false);
   const [abstractOpen, setAbstractOpen] = useState(false);
   const [abstractRegistrationId, setAbstractRegistrationId] =
@@ -34,10 +36,9 @@ export default function Home() {
     setAbstractOpen(true);
   };
 
-
   const closeAbstractSubmission = () => {
     setAbstractOpen(false);
-    setAbstractRegistrationId("");
+    setAbstractRegistrationId(null);
   };
 
   // Fade sections in as they scroll into view.
@@ -63,7 +64,9 @@ export default function Home() {
   useEffect(() => {
     const fn = (e) => {
       if (lightbox !== null) {
-        if (e.key === "Escape") setLightbox(null);
+        if (e.key === "Escape") {
+          setLightbox(null);
+        }
 
         if (e.key === "ArrowRight") {
           setLightbox(
@@ -74,7 +77,7 @@ export default function Home() {
         if (e.key === "ArrowLeft") {
           setLightbox(
             (lightbox - 1 + gallery.length) %
-            gallery.length
+              gallery.length
           );
         }
       }
@@ -114,13 +117,13 @@ export default function Home() {
         onRegister={openRegistration}
       />
 
+      <SymposiumHeader />
+
       <main id="top">
         <Hero
           jump={jump}
           onRegister={openRegistration}
         />
-
-
 
         <About />
 
@@ -150,7 +153,7 @@ export default function Home() {
           onPrev={() =>
             setLightbox(
               (lightbox - 1 + gallery.length) %
-              gallery.length
+                gallery.length
             )
           }
           onNext={() =>
@@ -158,14 +161,12 @@ export default function Home() {
               (lightbox + 1) % gallery.length
             )
           }
-
-
         />
       )}
 
       <RegistrationModal
         isOpen={registrationOpen}
-        onClose={() => setRegistrationOpen(false)}
+        onClose={closeRegistration}
         onAbstractSubmit={openAbstractSubmission}
       />
 
@@ -174,8 +175,6 @@ export default function Home() {
         onClose={closeAbstractSubmission}
         registrationId={abstractRegistrationId}
       />
-
-    
     </>
   );
 }

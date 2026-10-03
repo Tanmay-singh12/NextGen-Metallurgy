@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   ArrowUpRight,
@@ -42,8 +41,7 @@ export default function Navbar({
           </span>
 
           <span>
-            METALLUM
-            <small>MME · 2026</small>
+            SYMPOSIUM
           </span>
         </a>
 
@@ -101,4 +99,3 @@ export default function Navbar({
     </>
   );
 }
-

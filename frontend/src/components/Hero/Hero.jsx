@@ -1,4 +1,3 @@
-
 import React from "react";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import "./Hero.css";
@@ -10,7 +9,7 @@ export default function Hero({ jump, onRegister }) {
         <div className="grain"></div>
 
         <div className="hero-copy">
-          <p className="eyebrow">
+          <p className="eyebrow aryan">
             National materials conference · 12—14 Oct
           </p>
 
@@ -36,7 +35,7 @@ export default function Hero({ jump, onRegister }) {
             </button>
 
             <button
-              className="text-button"
+              className="text-button pawar"
               onClick={() => jump("about")}
             >
               Explore Metallum
@@ -95,4 +94,3 @@ export default function Hero({ jump, onRegister }) {
     </>
   );
 }
-
