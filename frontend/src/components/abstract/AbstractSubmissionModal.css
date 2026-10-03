@@ -276,6 +276,13 @@
   font-size: 9px;
 }
 
+.payment-qr-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
 .abstract-form-error {
   padding: 11px 13px;
   border: 1px solid #efc8c8;

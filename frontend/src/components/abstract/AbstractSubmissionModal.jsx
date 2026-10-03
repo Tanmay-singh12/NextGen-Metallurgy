@@ -582,12 +582,10 @@ export default function AbstractSubmissionModal({
                                     </div>
 
                                     <div className="payment-qr-placeholder">
-                                        <span>
-                                            PAYMENT QR CODE
-                                        </span>
-                                        <small>
-                                            Add conference QR image here
-                                        </small>
+                                        <img
+                                            src="/payment-qr.png"
+                                            alt="Conference payment QR code"
+                                        />
                                     </div>
 
 
