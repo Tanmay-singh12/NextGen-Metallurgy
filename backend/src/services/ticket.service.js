@@ -23,8 +23,8 @@ export const generateConferenceTicket = async (registration) => {
       size: "A4",
       margin: 50,
       info: {
-        Title: "NextGen Materials Conference Ticket",
-        Author: "NextGen Materials Conference",
+        Title: "COALESCENCE Materials Conference Ticket",
+        Author: "COALESCENCE Materials Conference",
         Subject: "Conference Registration Ticket",
       },
     });
@@ -46,7 +46,7 @@ export const generateConferenceTicket = async (registration) => {
       .fontSize(11)
       .fillColor("#086c5e")
       .font("Helvetica-Bold")
-      .text("METALLUM · MME 2026", {
+      .text("SYMPOSIUM · MME 2026", {
         align: "center",
       });
 
@@ -65,7 +65,7 @@ export const generateConferenceTicket = async (registration) => {
       .fontSize(10)
       .fillColor("#666666")
       .font("Helvetica")
-      .text("NEXTGEN MATERIALS CONFERENCE", {
+      .text("COALESCENCE MATERIALS CONFERENCE", {
         align: "center",
         characterSpacing: 1.2,
       });
@@ -166,7 +166,7 @@ export const generateConferenceTicket = async (registration) => {
       .fillColor("#102c27")
       .font("Helvetica-Bold")
       .text(
-        "NextGen Materials Conference",
+        "Coalescence Materials Conference",
         90,
         eventY + 20
       );
@@ -176,7 +176,7 @@ export const generateConferenceTicket = async (registration) => {
       .fillColor("#555555")
       .font("Helvetica")
       .text(
-        "12 — 14 October 2026",
+        "17 — 20 October 2026",
         90,
         eventY + 40
       );
