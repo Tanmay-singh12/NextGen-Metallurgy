@@ -126,4 +126,16 @@ export const getPaymentScreenshotUrl = (
   )}/files/payment-screenshot`;
 };
 
+export const getRegistrationStatusByRollNumber = async (
+  rollNumber
+) => {
+  const response = await api.get(
+    `/registrations/status/${encodeURIComponent(
+      rollNumber
+    )}`
+  );
+
+  return response.data;
+};
+
 export default api;

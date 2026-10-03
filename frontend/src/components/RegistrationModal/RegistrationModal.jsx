@@ -1,22 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { X, Send } from "lucide-react";
-import { registerForConference } from "../../services/api";
+import { X, Send, Download } from "lucide-react";
+
+import {
+  registerForConference,
+  getRegistrationStatusByRollNumber,
+} from "../../services/api";
+
 import "./RegistrationModal.css";
 
-export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    rollNumber: "",
-    year: "",
-    department: "",
-  });
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "http://localhost:5000/api/v1";
+
+const EMPTY_FORM = {
+  name: "",
+  rollNumber: "",
+  year: "",
+  department: "",
+};
+
+export default function RegistrationModal({
+  isOpen,
+  onClose,
+  onAbstractSubmit,
+}) {
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(null);
+  const [existingRegistration, setExistingRegistration] =
+    useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
     setFormData((prev) => ({
       ...prev,
@@ -28,42 +45,109 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    setLoading(true);
+    if (loading) return;
+
     setError("");
+    setSuccess(null);
+    setExistingRegistration(null);
+
+    const rollNumber = formData.rollNumber.trim();
+
+    if (!rollNumber) {
+      setError("Roll number is required.");
+      return;
+    }
 
     try {
-      const response = await registerForConference(formData);
-      
-      console.log("Registration API response:", response);
-      setSuccess(response.data || response);
+      setLoading(true);
 
-      setFormData({
-        name: "",
-        rollNumber: "",
-        year: "",
-        department: "",
+      /*
+       * STEP 1
+       * Check whether this roll number is already registered.
+       */
+      try {
+        const statusResponse =
+          await getRegistrationStatusByRollNumber(
+            rollNumber
+          );
+
+        if (
+          statusResponse?.success &&
+          statusResponse?.data?.registration
+        ) {
+          setExistingRegistration(statusResponse.data);
+          return;
+        }
+      } catch (statusError) {
+        /*
+         * 404 means the roll number is new.
+         * Continue with registration.
+         */
+        if (statusError.response?.status !== 404) {
+          throw statusError;
+        }
+      }
+
+      /*
+       * STEP 2
+       * New participant → create registration.
+       */
+      const response = await registerForConference({
+        ...formData,
+        rollNumber,
       });
-    } catch (error) {
-      const responseData = error.response?.data;
 
-      if (responseData?.errors) {
-        const validationErrors = Object.values(
-          responseData.errors
+      const registrationData =
+        response?.data || response;
+
+      if (!registrationData?.registrationId) {
+        throw new Error(
+          "Registration was created, but registration details were not returned."
+        );
+      }
+
+      /*
+       * STEP 3
+       * Show successful registration screen.
+       */
+      setSuccess({
+        registrationId:
+          registrationData.registrationId,
+        name: registrationData.name,
+        rollNumber: registrationData.rollNumber,
+        year: registrationData.year,
+        department: registrationData.department,
+        createdAt: registrationData.createdAt,
+      });
+
+      setFormData(EMPTY_FORM);
+    } catch (requestError) {
+      const backendMessage =
+        requestError.response?.data?.message;
+
+      const backendErrors =
+        requestError.response?.data?.errors;
+
+      if (backendErrors) {
+        const firstError = Object.values(
+          backendErrors
         )
           .flat()
-          .join(" ");
+          ?.find(Boolean);
 
         setError(
-          validationErrors ||
-          "Please check your registration details."
+          firstError ||
+            backendMessage ||
+            "Registration failed."
         );
       } else {
         setError(
-          responseData?.message ||
-          "Registration failed. Please try again."
+          backendMessage ||
+            requestError.message ||
+            "Registration failed. Please try again."
         );
       }
     } finally {
@@ -76,32 +160,50 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
 
     setError("");
     setSuccess(null);
-
-    setFormData({
-      name: "",
-      rollNumber: "",
-      year: "",
-      department: "",
-    });
+    setExistingRegistration(null);
+    setFormData(EMPTY_FORM);
 
     onClose();
+  };
+
+  const handleDownloadTicket = () => {
+    if (!success?.registrationId) return;
+
+    const ticketUrl =
+      `${API_BASE_URL}/registrations/` +
+      `${encodeURIComponent(success.registrationId)}/ticket`;
+
+    window.open(ticketUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleSubmitAbstract = (registrationId) => {
+    if (!registrationId) return;
+
+    onAbstractSubmit?.(registrationId);
   };
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleEscape = (e) => {
-      if (e.key === "Escape") {
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
         handleClose();
       }
     };
 
-    document.addEventListener("keydown", handleEscape);
+    document.addEventListener(
+      "keydown",
+      handleEscape
+    );
 
     document.body.style.overflow = "hidden";
 
     return () => {
-      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener(
+        "keydown",
+        handleEscape
+      );
+
       document.body.style.overflow = "";
     };
   }, [isOpen, loading]);
@@ -111,14 +213,17 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
   return (
     <div
       className="registration-overlay"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget && !loading) {
+      onMouseDown={(event) => {
+        if (
+          event.target === event.currentTarget &&
+          !loading
+        ) {
           handleClose();
         }
       }}
     >
       <div
-        className="registration-modal"
+        className="conference-registration-dialog"
         role="dialog"
         aria-modal="true"
         aria-labelledby="registration-title"
@@ -133,6 +238,9 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
           <X size={20} />
         </button>
 
+        {/* =====================================================
+            NEW REGISTRATION SUCCESS
+        ====================================================== */}
         {success ? (
           <div className="registration-success">
             <p className="eyebrow">
@@ -173,6 +281,13 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
               </div>
 
               <div>
+                <span>Year</span>
+                <strong>
+                  {success.year}
+                </strong>
+              </div>
+
+              <div>
                 <span>Department</span>
                 <strong>
                   {success.department}
@@ -188,24 +303,20 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
               <button
                 type="button"
                 className="register registration-submit"
-                onClick={() => {
-                  window.open(
-                    `${import.meta.env.VITE_API_BASE_URL}/registrations/${encodeURIComponent(
-                      success.registrationId
-                    )}/ticket`,
-                    "_blank"
-                  );
-                }}
+                onClick={handleDownloadTicket}
               >
+                <Download size={16} />
                 Download Conference Ticket
               </button>
 
               <button
                 type="button"
                 className="abstract-button"
-                onClick={() => {
-                  onAbstractSubmit?.(success.registrationId);
-                }}
+                onClick={() =>
+                  handleSubmitAbstract(
+                    success.registrationId
+                  )
+                }
               >
                 Submit Abstract
               </button>
@@ -219,7 +330,166 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
               </button>
             </div>
           </div>
+
+        ) : existingRegistration ? (
+
+          /* =====================================================
+             EXISTING REGISTRATION
+          ====================================================== */
+          <div className="registration-success">
+            <p className="eyebrow">
+              Already Registered
+            </p>
+
+            <h3>
+              You're
+              <br />
+              <em>already registered.</em>
+            </h3>
+
+            <p>
+              We found an existing conference
+              registration for this roll number.
+            </p>
+
+            <div className="registration-details">
+              <div>
+                <span>Registration ID</span>
+                <strong>
+                  {
+                    existingRegistration.registration
+                      .registrationId
+                  }
+                </strong>
+              </div>
+
+              <div>
+                <span>Name</span>
+                <strong>
+                  {
+                    existingRegistration.registration
+                      .name
+                  }
+                </strong>
+              </div>
+
+              <div>
+                <span>Roll Number</span>
+                <strong>
+                  {
+                    existingRegistration.registration
+                      .rollNumber
+                  }
+                </strong>
+              </div>
+
+              <div>
+                <span>Year</span>
+                <strong>
+                  {
+                    existingRegistration.registration
+                      .year
+                  }
+                </strong>
+              </div>
+
+              <div>
+                <span>Department</span>
+                <strong>
+                  {
+                    existingRegistration.registration
+                      .department
+                  }
+                </strong>
+              </div>
+            </div>
+
+            {existingRegistration.abstract
+              ?.submitted ? (
+              <>
+                <div className="abstract-status-card">
+                  <span>
+                    ABSTRACT STATUS
+                  </span>
+
+                  <strong>
+                    {
+                      existingRegistration.abstract
+                        .status
+                    }
+                  </strong>
+
+                  <p>
+                    {
+                      existingRegistration.abstract
+                        .abstractTitle
+                    }
+                  </p>
+
+                  {existingRegistration.abstract
+                    .rejectionReason && (
+                    <p>
+                      <strong>
+                        Rejection Reason:
+                      </strong>{" "}
+                      {
+                        existingRegistration.abstract
+                          .rejectionReason
+                      }
+                    </p>
+                  )}
+                </div>
+
+                <p className="ticket-note">
+                  Your abstract has already been
+                  submitted. The current status is
+                  shown above.
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="abstract-status-card">
+                  <span>ABSTRACT</span>
+
+                  <strong>
+                    Not Submitted
+                  </strong>
+
+                  <p>
+                    You have not submitted an
+                    abstract yet.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  className="abstract-button"
+                  onClick={() =>
+                    handleSubmitAbstract(
+                      existingRegistration
+                        .registration.registrationId
+                    )
+                  }
+                >
+                  Submit Abstract
+                </button>
+              </>
+            )}
+
+            <button
+              type="button"
+              className="done-button"
+              onClick={handleClose}
+            >
+              Close
+            </button>
+          </div>
+
         ) : (
+
+          /* =====================================================
+             NORMAL REGISTRATION FORM
+          ====================================================== */
           <>
             <div className="registration-header">
               <p className="eyebrow">
@@ -233,12 +503,16 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
               </h3>
 
               <p>
-                Registration for the conference is free.
+                Registration for the conference is
+                free.
               </p>
             </div>
 
             {error && (
-              <div className="registration-error" role="alert">
+              <div
+                className="registration-error"
+                role="alert"
+              >
                 {error}
               </div>
             )}
@@ -287,7 +561,10 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
                   required
                   disabled={loading}
                 >
-                  <option value="" disabled>
+                  <option
+                    value=""
+                    disabled
+                  >
                     Select your year
                   </option>
 
@@ -336,7 +613,9 @@ export default function RegistrationModal({ isOpen, onClose, onAbstractSubmit, }
                   ? "Registering..."
                   : "Register for Conference"}
 
-                {!loading && <Send size={16} />}
+                {!loading && (
+                  <Send size={16} />
+                )}
               </button>
             </form>
           </>

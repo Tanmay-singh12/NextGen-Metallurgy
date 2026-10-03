@@ -1,6 +1,7 @@
 import crypto from "crypto";
 
 import Registration from "../models/Registration.js";
+import AbstractSubmission from "../models/AbstractSubmission.js";
 
 const generateRegistrationId = async () => {
   let registrationId;
@@ -108,4 +109,118 @@ export const getRegistrationById = async (registrationId) => {
   }
 
   return registration;
+};
+
+export const getRegistrationByRollNumber = async (
+  rollNumber
+) => {
+  const normalizedRollNumber =
+    rollNumber?.trim().toUpperCase();
+
+  if (!normalizedRollNumber) {
+    const error = new Error(
+      "Roll number is required."
+    );
+
+    error.statusCode = 400;
+
+    throw error;
+  }
+
+  const registration = await Registration.findOne({
+    rollNumber: normalizedRollNumber,
+  })
+    .select(
+      "registrationId name rollNumber year department createdAt"
+    )
+    .lean();
+
+  if (!registration) {
+    const error = new Error(
+      "No registration found for this roll number."
+    );
+
+    error.statusCode = 404;
+
+    throw error;
+  }
+
+  return registration;
+};
+
+export const getRegistrationStatusByRollNumber = async (
+  rollNumber
+) => {
+  const normalizedRollNumber =
+    rollNumber?.trim().toUpperCase();
+
+  if (!normalizedRollNumber) {
+    const error = new Error(
+      "Roll number is required."
+    );
+
+    error.statusCode = 400;
+
+    throw error;
+  }
+
+  const registration = await Registration.findOne({
+    rollNumber: normalizedRollNumber,
+  })
+    .select(
+      "registrationId name rollNumber year department createdAt"
+    )
+    .lean();
+
+  if (!registration) {
+    const error = new Error(
+      "No registration found for this roll number."
+    );
+
+    error.statusCode = 404;
+
+    throw error;
+  }
+
+  const abstractSubmission =
+    await AbstractSubmission.findOne({
+      registrationId: registration.registrationId,
+    })
+      .select(
+        "abstractTitle status rejectionReason createdAt reviewedAt"
+      )
+      .lean();
+
+  return {
+    registration: {
+      registrationId: registration.registrationId,
+      name: registration.name,
+      rollNumber: registration.rollNumber,
+      year: registration.year,
+      department: registration.department,
+      createdAt: registration.createdAt,
+    },
+
+    abstract: abstractSubmission
+      ? {
+          submitted: true,
+          abstractTitle:
+            abstractSubmission.abstractTitle,
+          status: abstractSubmission.status,
+          rejectionReason:
+            abstractSubmission.rejectionReason,
+          createdAt:
+            abstractSubmission.createdAt,
+          reviewedAt:
+            abstractSubmission.reviewedAt,
+        }
+      : {
+          submitted: false,
+          abstractTitle: null,
+          status: null,
+          rejectionReason: null,
+          createdAt: null,
+          reviewedAt: null,
+        },
+  };
 };

@@ -1,6 +1,8 @@
 import {
   createRegistration,
   getRegistrationById,
+  getRegistrationByRollNumber,
+  getRegistrationStatusByRollNumber,
 } from "../services/registration.service.js";
 
 import { validateRegistration } from "../validators/registration.validator.js";
@@ -89,6 +91,62 @@ export const downloadTicket = async (req, res, next) => {
     });
 
     return res.status(200).send(ticketBuffer);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRegistrationByRoll = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const { rollNumber } = req.params;
+
+    const registration =
+      await getRegistrationByRollNumber(rollNumber);
+
+    return res.status(200).json({
+      success: true,
+      message: "Registration found successfully.",
+      data: {
+        registrationId:
+          registration.registrationId,
+        name: registration.name,
+        rollNumber:
+          registration.rollNumber,
+        year: registration.year,
+        department:
+          registration.department,
+        createdAt:
+          registration.createdAt,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRegistrationStatusByRoll = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const { rollNumber } = req.params;
+
+    const result =
+      await getRegistrationStatusByRollNumber(
+        rollNumber
+      );
+
+    return res.status(200).json({
+      success: true,
+      message:
+        "Registration and abstract status fetched successfully.",
+      data: result,
+    });
   } catch (error) {
     next(error);
   }

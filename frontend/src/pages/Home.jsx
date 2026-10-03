@@ -164,48 +164,18 @@ export default function Home() {
       )}
 
       <RegistrationModal
-  isOpen={registrationOpen}
-  onClose={closeRegistration}
-  onAbstractSubmit={(registrationId) => {
-    console.log("ABSTRACT BUTTON CLICKED:", registrationId);
+        isOpen={registrationOpen}
+        onClose={() => setRegistrationOpen(false)}
+        onAbstractSubmit={openAbstractSubmission}
+      />
 
-    setRegistrationOpen(false);
-    setAbstractRegistrationId(registrationId);
-    setAbstractOpen(true);
-  }}
-/>
       <AbstractSubmissionModal
         isOpen={abstractOpen}
         onClose={closeAbstractSubmission}
         registrationId={abstractRegistrationId}
       />
 
-      {/* {registrationOpen && (
-        <div
-          className="registration-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Conference registration"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              closeRegistration();
-            }
-          }}
-        >
-          <div className="registration-modal-content">
-            <button
-              type="button"
-              className="registration-modal-close"
-              onClick={closeRegistration}
-              aria-label="Close registration"
-            >
-              ×
-            </button>
-
-            <Contact />
-          </div>
-        </div>
-      )} */}
+    
     </>
   );
 }

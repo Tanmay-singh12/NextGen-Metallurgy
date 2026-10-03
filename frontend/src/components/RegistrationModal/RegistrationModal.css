@@ -14,7 +14,7 @@
   overflow-y: auto;
 }
 
-.registration-modal {
+.registration-dialog {
   position: relative;
 
   width: min(520px, 100%);
@@ -116,7 +116,7 @@
     padding: 14px;
   }
 
-  .registration-modal {
+  .registration-dialog {
     padding: 30px 22px;
     max-height: calc(100vh - 28px);
   }
@@ -220,4 +220,40 @@
 
 .done-button:hover {
   background: #f3f6f5;
+}
+
+.conference-registration-dialog {
+  position: relative;
+  width: min(92vw, 560px);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 42px;
+  box-sizing: border-box;
+  z-index: 1001;
+}
+
+.conference-registration-dialog .registration-success {
+  display: block;
+  width: 100%;
+  visibility: visible;
+  opacity: 1;
+}
+
+.conference-registration-dialog .registration-success h3,
+.conference-registration-dialog .registration-success p,
+.conference-registration-dialog .registration-success div,
+.conference-registration-dialog .registration-success span,
+.conference-registration-dialog .registration-success strong,
+.conference-registration-dialog .registration-success button {
+  visibility: visible;
+  opacity: 1;
+}
+
+.conference-registration-dialog .registration-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
 }
