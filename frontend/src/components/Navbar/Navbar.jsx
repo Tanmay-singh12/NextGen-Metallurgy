@@ -14,7 +14,7 @@ export default function Navbar({ menu, setMenu, jump }) {
             <span className="mark-orbit orbit-b"></span>
             <Atom size={22} />
           </span>
-          <span>METALLUM<small>MME · 2026</small></span>
+          <span>SYMPOSIUM</span>
         </a>
         <nav>{nav.map(x => <button key={x} onClick={() => jump(x)}>{x}</button>)}</nav>
         <button className="register mini" onClick={() => jump('contact')}>Register <ArrowUpRight size={15} /></button>

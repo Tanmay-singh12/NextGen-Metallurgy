@@ -10,3 +10,12 @@
 .dark-button{background:var(--ink);margin-top:9px}
 @media (max-width:820px){.feature{grid-template-columns:1fr;padding:75px 25px}.feature-art{min-height:350px}.feature-copy{padding:45px 0 0}}
 @media (max-width:500px){.feature-art{min-height:300px}.feature-ring{transform:scale(.7) rotateX(62deg) rotateZ(20deg);transform-origin:bottom right}.feature-ball{transform:scale(.7);transform-origin:bottom right}.feature-art p{font-size:30px;left:25px;top:28px}.feature-info{display:grid;gap:6px}}
+.mobile-hide-image {
+  display: block;
+}
+
+@media (max-width: 820px) {
+  .mobile-hide-image {
+    display: none;
+  }
+}

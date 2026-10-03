@@ -6,12 +6,12 @@
 .gallery-tile span,.gallery-tile svg{position:absolute;z-index:1}
 .gallery-tile span{left:16px;bottom:15px;font:600 17px var(--serif)}
 .gallery-tile svg{right:15px;top:15px}
-.gallery-a{grid-row:span 2;background:linear-gradient(140deg,#388b79,#b8d78a 42%,#16705d)}
-.gallery-b{background:linear-gradient(140deg,#b6d6cb,#579681)}
-.gallery-c{background:linear-gradient(140deg,#d99b68,#6a4033)}
-.gallery-d{background:linear-gradient(130deg,#779cbd,#243b55)}
-.gallery-e{background:linear-gradient(130deg,#d7d69d,#5f8c4b)}
-.gallery-f{background:linear-gradient(130deg,#dfa88a,#9e6054)}
+.gallery-a{grid-row:span 2;background:whitesmoke}
+.gallery-b{background:whitesmoke}
+.gallery-c{background:whitesmoke}
+.gallery-d{background:whitesmoke}
+.gallery-e{background:whitesmoke}
+.gallery-f{background:whitesmoke}
 .lightbox{position:fixed;z-index:100;inset:0;background:#10221dE8;display:grid;place-items:center;padding:80px}
 .lightbox-art{width:min(760px,80vw);height:min(570px,70vh);border-radius:15px;position:relative;box-shadow:0 30px 70px #0006}
 .lightbox-art p{position:absolute;bottom:22px;left:25px;color:#fff;font:700 31px var(--serif)}

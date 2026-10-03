@@ -13,7 +13,7 @@ import Partners from '../components/Partners/Partners';
 import Contact from '../components/Contact/Contact';
 import Footer from '../components/Footer/Footer';
 import { gallery } from '../data/gallery';
-
+import SymposiumHeader from '../components/SymposiumHeader/SymposiumHeader';
 export default function Home() {
   const [menu, setMenu] = useState(false);
   const [lightbox, setLightbox] = useState(null);
@@ -49,6 +49,7 @@ export default function Home() {
   return (
     <>
       <Navbar menu={menu} setMenu={setMenu} jump={jump} />
+      <SymposiumHeader />
       <main id="top">
         <Hero jump={jump} />
         <About />

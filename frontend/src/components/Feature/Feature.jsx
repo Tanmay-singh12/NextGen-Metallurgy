@@ -4,7 +4,7 @@ import './Feature.css';
 
 export default function Feature({ jump }) {
   return (
-    <section className="feature wrap">
+    <section className="feature wrap mobile-hide-image">
       <div className="feature-art">
         <div className="feature-ring"></div>
         <div className="feature-ball"></div>

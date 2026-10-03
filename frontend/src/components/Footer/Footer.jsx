@@ -11,9 +11,15 @@ export default function Footer() {
           <span className="mark-orbit orbit-b"></span>
           <Atom size={20} />
         </span>
-        METALLUM <small>MME · 2026</small>
+        SYMPOSIUM <small>MME · 2026</small>
       </div>
-      <p>Built around ideas worth sharing.</p>
+      <p>In Collaboration
+        <img
+        src="/assets/syntax-logo.png"
+        alt="Syntax"
+        className="syntax-logo"
+        />
+      </p>
       <div>
         <a href="#top">Instagram</a>
         <a href="#top">LinkedIn</a>

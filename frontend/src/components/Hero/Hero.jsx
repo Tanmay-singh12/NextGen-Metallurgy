@@ -8,12 +8,12 @@ export default function Hero({ jump }) {
       <section className="hero">
         <div className="grain"></div>
         <div className="hero-copy">
-          <p className="eyebrow">National materials conference · 12—14 Oct</p>
+          <p className="eyebrow aryan">Materials conference · 17—20 Oct</p>
           <h1>The materials<br /><i>that move</i> us.</h1>
           <p className="hero-text">A three-day conversation between students, researchers and industry—exploring the systems, metals and ideas that shape a more resilient world.</p>
           <div className="hero-actions">
-            <button className="register" onClick={() => jump('contact')}>Reserve your place <ArrowUpRight size={17} /></button>
-            <button className="text-button" onClick={() => jump('about')}>Explore Metallum <ArrowRight size={17} /></button>
+            <button className="register" onClick={() => jump('contact')}>Registration for Symposium<ArrowUpRight size={17} /></button>
+            <button className="text-button pawar" onClick={() => jump('about')}>Explore Metallum <ArrowRight size={17} /></button>
           </div>
         </div>
         <figure className="hero-art hero-sculpture">

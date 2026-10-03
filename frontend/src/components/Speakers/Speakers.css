@@ -5,10 +5,10 @@
 .speaker{border-top:1px solid #4c675d;padding-top:15px;position:relative}
 .avatar{height:190px;border-radius:12px 12px 0 0;display:flex;align-items:end;padding:18px;font:700 36px var(--serif);letter-spacing:-.06em;overflow:hidden;color:#123f35;position:relative}
 .avatar:after{content:"";position:absolute;right:-23px;bottom:-23px;width:106px;height:106px;border-radius:50%;background:#fff6;filter:blur(1px)}
-.speaker-one{background:#c8dd91}
-.speaker-two{background:#b6d8ce}
-.speaker-three{background:#eac69b}
-.speaker-four{background:#c7ced6}
+.speaker-one{background:#f6f6f5}
+.speaker-two{background:#f6f6f5}
+.speaker-three{background:#f6f6f5}
+.speaker-four{background:#f6f6f5}
 .speaker h3{margin:13px 0 4px;font-size:15px;letter-spacing:-.03em}
 .speaker p{font-size:11px;line-height:1.5;color:#b9cbc1;margin:0}
 .speaker button{position:absolute;right:0;bottom:0;background:#ffffff14;color:#fff;padding:8px;border-radius:50%}

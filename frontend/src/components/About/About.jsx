@@ -6,12 +6,12 @@ import './About.css';
 export default function About() {
   return (
     <section className="about wrap" id="about">
-      <div className="about-visual">
+      <div className="about-visual mobile-hide-image">
         <div className="visual-card"><FlaskConical /><p>Curiosity, made tangible.</p></div>
         <div className="metal-disc"></div>
         <div className="about-caption">/ 01<br /><b>DISCOVER</b></div>
       </div>
-      <div className="about-copy">
+      <div className="about-copy ary">
         <SectionHead eyebrow="About the conference" title={<>Where deep research meets <em>real possibility.</em></>}>
           Metallum is our annual meeting point for material thinkers. It brings the lab, the classroom and the shop floor into one purposeful conversation.
         </SectionHead>
