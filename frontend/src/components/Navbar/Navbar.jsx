@@ -41,7 +41,7 @@ export default function Navbar({
           </span>
 
           <span>
-            SYMPOSIUM
+            COALESCENCE
           </span>
         </a>
 

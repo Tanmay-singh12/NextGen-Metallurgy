@@ -3,7 +3,7 @@ import { SectionHead } from '../SectionHead';
 import { schedule } from '../../data/schedule';
 import './Schedule.css';
 
-const dayLabels = ['12 Oct · Day one', '13 Oct · Day two', '14 Oct · Day three'];
+const dayLabels = ['16 Oct · Day one', '17 Oct · Day two', '18 Oct · Day three'];
 
 export default function Schedule() {
   const [day, setDay] = useState(0);

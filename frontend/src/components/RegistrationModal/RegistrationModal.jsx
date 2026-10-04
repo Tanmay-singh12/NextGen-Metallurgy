@@ -254,7 +254,7 @@ export default function RegistrationModal({
             </h3>
 
             <p>
-              Your conference registration has been
+              Your registration for the Symposium has been
               successfully completed.
             </p>
 
@@ -493,17 +493,17 @@ export default function RegistrationModal({
           <>
             <div className="registration-header">
               <p className="eyebrow">
-                Conference Registration
+                Symposium Registration
               </p>
 
               <h3 id="registration-title">
                 Reserve your
-                <br />
+                {/* <br /> */}
                 <em>place.</em>
               </h3>
 
               <p>
-                Registration for the conference is
+                Registration for the Symposium is
                 free.
               </p>
             </div>

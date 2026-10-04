@@ -46,12 +46,12 @@ export default function Contact({ onRegister }) {
         </div>
 
         <div className="contact-info">
-          <p className="eyebrow">Conference Registration</p>
+          <p className="eyebrow">Symposium Registration</p>
 
           <h3>Ready to join us?</h3>
 
           <p>
-            Registration for the conference is free.
+            Registration for the Symposium is free.
             Secure your place using the registration
             button.
           </p>
@@ -60,7 +60,7 @@ export default function Contact({ onRegister }) {
             className="register"
             onClick={onRegister}
           >
-            Register for Conference
+            Register for Symposium
           </button>
         </div>
       </div>

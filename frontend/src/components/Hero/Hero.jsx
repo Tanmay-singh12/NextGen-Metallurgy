@@ -10,7 +10,7 @@ export default function Hero({ jump, onRegister }) {
 
         <div className="hero-copy">
           <p className="eyebrow aryan">
-            National materials conference · 12—14 Oct
+            Materials Symposium · 16—18 Oct
           </p>
 
           <h1>
@@ -30,7 +30,7 @@ export default function Hero({ jump, onRegister }) {
               className="register"
               onClick={onRegister}
             >
-              Reserve your place
+              Sign up for coalescence
               <ArrowUpRight size={17} />
             </button>
 
@@ -38,7 +38,7 @@ export default function Hero({ jump, onRegister }) {
               className="text-button pawar"
               onClick={() => jump("about")}
             >
-              Explore Metallum
+              Explore Symposium
               <ArrowRight size={17} />
             </button>
           </div>

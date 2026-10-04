@@ -12,7 +12,7 @@ export default function About() {
         <div className="about-caption">/ 01<br /><b>DISCOVER</b></div>
       </div>
       <div className="about-copy ary">
-        <SectionHead eyebrow="About the conference" title={<>Where deep research meets <em>real possibility.</em></>}>
+        <SectionHead eyebrow="About the Symposium" title={<>Where deep research meets <em>real possibility.</em></>}>
           Metallum is our annual meeting point for material thinkers. It brings the lab, the classroom and the shop floor into one purposeful conversation.
         </SectionHead>
         <p className="body-copy">We are building a programme that is thoughtful, practical and unafraid of hard questions. Come to learn from people doing the work—and leave with collaborators for what comes next.</p>

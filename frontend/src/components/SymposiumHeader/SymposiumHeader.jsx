@@ -15,7 +15,7 @@ export default function SymposiumHeader() {
       <div className="symposium-title">
         
 
-        <h2>SYMPOSIUM</h2>
+        <h2>COALESCENCE</h2>
 
         <span className="symposium-line"></span>
       </div>
