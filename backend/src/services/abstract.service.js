@@ -26,7 +26,7 @@ export const createAbstractSubmission = async (
 
     if (!registration) {
         const error = new Error(
-            "Valid conference registration is required before submitting an abstract."
+            "Valid symposium registration is required before submitting an abstract."
         );
         error.statusCode = 404;
         throw error;

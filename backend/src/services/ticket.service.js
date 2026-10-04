@@ -23,9 +23,9 @@ export const generateConferenceTicket = async (registration) => {
       size: "A4",
       margin: 50,
       info: {
-        Title: "COALESCENCE Materials Conference Ticket",
-        Author: "COALESCENCE Materials Conference",
-        Subject: "Conference Registration Ticket",
+        Title: "Materials Symposium Ticket",
+        Author: "COALESCENCE the Materials Symposium",
+        Subject: "Symposium Registration Ticket",
       },
     });
 
@@ -46,7 +46,7 @@ export const generateConferenceTicket = async (registration) => {
       .fontSize(11)
       .fillColor("#086c5e")
       .font("Helvetica-Bold")
-      .text("SYMPOSIUM · MME 2026", {
+      .text("COALESCENCE · MME 2026", {
         align: "center",
       });
 
@@ -55,7 +55,7 @@ export const generateConferenceTicket = async (registration) => {
     doc
       .fontSize(26)
       .fillColor("#102c27")
-      .text("Conference Ticket", {
+      .text("Symposium Ticket", {
         align: "center",
       });
 
@@ -65,7 +65,7 @@ export const generateConferenceTicket = async (registration) => {
       .fontSize(10)
       .fillColor("#666666")
       .font("Helvetica")
-      .text("COALESCENCE MATERIALS CONFERENCE", {
+      .text("COALESCENCE THE MATERIALS SYMPOSIUM", {
         align: "center",
         characterSpacing: 1.2,
       });
@@ -166,7 +166,7 @@ export const generateConferenceTicket = async (registration) => {
       .fillColor("#102c27")
       .font("Helvetica-Bold")
       .text(
-        "Coalescence Materials Conference",
+        "Coalescence the Materials Symposium",
         90,
         eventY + 20
       );
@@ -176,7 +176,7 @@ export const generateConferenceTicket = async (registration) => {
       .fillColor("#555555")
       .font("Helvetica")
       .text(
-        "17 — 20 October 2026",
+        "16 — 18 October 2026",
         90,
         eventY + 40
       );
@@ -194,7 +194,7 @@ export const generateConferenceTicket = async (registration) => {
       .fontSize(8)
       .fillColor("#888888")
       .text(
-        "This ticket confirms your conference registration.",
+        "This ticket confirms your registration for the Symposium.",
         70,
         750,
         {
