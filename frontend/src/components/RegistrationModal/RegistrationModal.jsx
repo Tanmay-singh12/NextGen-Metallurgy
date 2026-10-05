@@ -14,10 +14,34 @@ const API_BASE_URL =
 
 const EMPTY_FORM = {
   name: "",
+  email: "",
+  mobileNumber: "",
   rollNumber: "",
   year: "",
   department: "",
 };
+
+const YEAR_OPTIONS = [
+  "1st Year",
+  "2nd Year",
+  "3rd Year",
+  "4th Year",
+  "MTech/Phd",
+  "Faculty or Staff",
+  "Other",
+];
+
+const DEPARTMENT_OPTIONS = [
+  "Metallurgical & Materials Engineering",
+  "Computer Science & Engineering",
+  "Electronics & Communication Engineering",
+  "Mechanical Engineering",
+  "Electrical Engineering",
+  "Civil Engineering",
+  "Chemical Engineering",
+  "Architecture & Planning",
+  "Other",
+];
 
 export default function RegistrationModal({
   isOpen,
@@ -35,14 +59,74 @@ export default function RegistrationModal({
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    let updatedValue = value;
+
+    if (name === "rollNumber") {
+      updatedValue = value.toUpperCase().replace(/\s/g, "");
+    }
+
+    if (name === "mobileNumber") {
+      updatedValue = value.replace(/\D/g, "").slice(0, 10);
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: updatedValue,
     }));
 
     if (error) {
       setError("");
     }
+  };
+
+  const validateForm = () => {
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const mobileNumber = formData.mobileNumber.trim();
+    const rollNumber = formData.rollNumber.trim().toUpperCase();
+    const year = formData.year.trim();
+    const department = formData.department.trim();
+
+    if (!name) {
+      return "Name is required.";
+    }
+
+    if (!email) {
+      return "Email is required.";
+    }
+
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid email address.";
+    }
+
+    if (!mobileNumber) {
+      return "Mobile number is required.";
+    }
+
+    if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+      return "Please enter a valid 10-digit mobile number.";
+    }
+
+    if (!rollNumber) {
+      return "Roll number is required.";
+    }
+
+    if (!/^BT[A-Z0-9]{8}$/.test(rollNumber)) {
+      return "Roll number must be in the format BTXXXXXXXX.";
+    }
+
+    if (!year) {
+      return "Year of study is required.";
+    }
+
+    if (!department) {
+      return "Department is required.";
+    }
+
+    return null;
   };
 
   const handleSubmit = async (event) => {
@@ -54,12 +138,15 @@ export default function RegistrationModal({
     setSuccess(null);
     setExistingRegistration(null);
 
-    const rollNumber = formData.rollNumber.trim();
+    const validationError = validateForm();
 
-    if (!rollNumber) {
-      setError("Roll number is required.");
+    if (validationError) {
+      setError(validationError);
       return;
     }
+
+    const rollNumber =
+      formData.rollNumber.trim().toUpperCase();
 
     try {
       setLoading(true);
@@ -96,8 +183,12 @@ export default function RegistrationModal({
        * New participant → create registration.
        */
       const response = await registerForConference({
-        ...formData,
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        mobileNumber: formData.mobileNumber.trim(),
         rollNumber,
+        year: formData.year.trim(),
+        department: formData.department.trim(),
       });
 
       const registrationData =
@@ -117,6 +208,8 @@ export default function RegistrationModal({
         registrationId:
           registrationData.registrationId,
         name: registrationData.name,
+        email: registrationData.email,
+        mobileNumber: registrationData.mobileNumber,
         rollNumber: registrationData.rollNumber,
         year: registrationData.year,
         department: registrationData.department,
@@ -173,7 +266,11 @@ export default function RegistrationModal({
       `${API_BASE_URL}/registrations/` +
       `${encodeURIComponent(success.registrationId)}/ticket`;
 
-    window.open(ticketUrl, "_blank", "noopener,noreferrer");
+    window.open(
+      ticketUrl,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
   const handleSubmitAbstract = (registrationId) => {
@@ -254,8 +351,8 @@ export default function RegistrationModal({
             </h3>
 
             <p>
-              Your registration for the Symposium has been
-              successfully completed.
+              Your registration for the Symposium has
+              been successfully completed.
             </p>
 
             <div className="registration-details">
@@ -268,8 +365,18 @@ export default function RegistrationModal({
 
               <div>
                 <span>Name</span>
+                <strong>{success.name}</strong>
+              </div>
+
+              <div>
+                <span>Email</span>
+                <strong>{success.email}</strong>
+              </div>
+
+              <div>
+                <span>Mobile Number</span>
                 <strong>
-                  {success.name}
+                  {success.mobileNumber}
                 </strong>
               </div>
 
@@ -282,16 +389,12 @@ export default function RegistrationModal({
 
               <div>
                 <span>Year</span>
-                <strong>
-                  {success.year}
-                </strong>
+                <strong>{success.year}</strong>
               </div>
 
               <div>
                 <span>Department</span>
-                <strong>
-                  {success.department}
-                </strong>
+                <strong>{success.department}</strong>
               </div>
             </div>
 
@@ -374,6 +477,26 @@ export default function RegistrationModal({
               </div>
 
               <div>
+                <span>Email</span>
+                <strong>
+                  {
+                    existingRegistration.registration
+                      .email || "Not available"
+                  }
+                </strong>
+              </div>
+
+              <div>
+                <span>Mobile Number</span>
+                <strong>
+                  {
+                    existingRegistration.registration
+                      .mobileNumber || "Not available"
+                  }
+                </strong>
+              </div>
+
+              <div>
                 <span>Roll Number</span>
                 <strong>
                   {
@@ -408,9 +531,7 @@ export default function RegistrationModal({
               ?.submitted ? (
               <>
                 <div className="abstract-status-card">
-                  <span>
-                    ABSTRACT STATUS
-                  </span>
+                  <span>ABSTRACT STATUS</span>
 
                   <strong>
                     {
@@ -498,7 +619,6 @@ export default function RegistrationModal({
 
               <h3 id="registration-title">
                 Reserve your
-                {/* <br /> */}
                 <em>place.</em>
               </h3>
 
@@ -537,6 +657,38 @@ export default function RegistrationModal({
               </label>
 
               <label>
+                Email
+
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  autoComplete="email"
+                  required
+                  disabled={loading}
+                />
+              </label>
+
+              <label>
+                Mobile number
+
+                <input
+                  type="tel"
+                  name="mobileNumber"
+                  value={formData.mobileNumber}
+                  onChange={handleChange}
+                  placeholder="Enter 10-digit mobile number"
+                  autoComplete="tel"
+                  inputMode="numeric"
+                  maxLength={10}
+                  required
+                  disabled={loading}
+                />
+              </label>
+
+              <label>
                 Roll number
 
                 <input
@@ -544,8 +696,9 @@ export default function RegistrationModal({
                   name="rollNumber"
                   value={formData.rollNumber}
                   onChange={handleChange}
-                  placeholder="Enter your roll number"
+                  placeholder="Example: BT25MME091"
                   autoComplete="off"
+                  maxLength={10}
                   required
                   disabled={loading}
                 />
@@ -568,40 +721,45 @@ export default function RegistrationModal({
                     Select your year
                   </option>
 
-                  <option value="1st Year">
-                    1st Year
-                  </option>
-
-                  <option value="2nd Year">
-                    2nd Year
-                  </option>
-
-                  <option value="3rd Year">
-                    3rd Year
-                  </option>
-
-                  <option value="4th Year">
-                    4th Year
-                  </option>
-
-                  <option value="Other">
-                    Other
-                  </option>
+                  {YEAR_OPTIONS.map((year) => (
+                    <option
+                      key={year}
+                      value={year}
+                    >
+                      {year}
+                    </option>
+                  ))}
                 </select>
               </label>
 
               <label>
                 Department
 
-                <input
-                  type="text"
+                <select
                   name="department"
                   value={formData.department}
                   onChange={handleChange}
-                  placeholder="Enter your department"
                   required
                   disabled={loading}
-                />
+                >
+                  <option
+                    value=""
+                    disabled
+                  >
+                    Select your department
+                  </option>
+
+                  {DEPARTMENT_OPTIONS.map(
+                    (department) => (
+                      <option
+                        key={department}
+                        value={department}
+                      >
+                        {department}
+                      </option>
+                    )
+                  )}
+                </select>
               </label>
 
               <button
