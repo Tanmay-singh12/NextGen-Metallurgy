@@ -18,6 +18,20 @@ const registrationSchema = new mongoose.Schema(
       maxlength: 100,
     },
 
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      maxlength: 150,
+    },
+
+    mobileNumber: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     rollNumber: {
       type: String,
       required: true,
@@ -25,7 +39,7 @@ const registrationSchema = new mongoose.Schema(
       index: true,
       trim: true,
       uppercase: true,
-      maxlength: 50,
+      maxlength: 10,
     },
 
     year: {
@@ -53,4 +67,4 @@ const Registration = mongoose.model(
   registrationSchema
 );
 
-export default Registration; 
+export default Registration;

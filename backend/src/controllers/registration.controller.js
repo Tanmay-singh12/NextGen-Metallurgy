@@ -35,6 +35,8 @@ export const register = async (req, res, next) => {
       data: {
         registrationId: registration.registrationId,
         name: registration.name,
+        email: registration.email,
+        mobileNumber: registration.mobileNumber,
         rollNumber: registration.rollNumber,
         year: registration.year,
         department: registration.department,
@@ -61,6 +63,8 @@ export const getRegistration = async (req, res, next) => {
       data: {
         registrationId: registration.registrationId,
         name: registration.name,
+        email: registration.email,
+        mobileNumber: registration.mobileNumber,
         rollNumber: registration.rollNumber,
         year: registration.year,
         department: registration.department,
@@ -111,16 +115,14 @@ export const getRegistrationByRoll = async (
       success: true,
       message: "Registration found successfully.",
       data: {
-        registrationId:
-          registration.registrationId,
+        registrationId: registration.registrationId,
         name: registration.name,
-        rollNumber:
-          registration.rollNumber,
+        email: registration.email,
+        mobileNumber: registration.mobileNumber,
+        rollNumber: registration.rollNumber,
         year: registration.year,
-        department:
-          registration.department,
-        createdAt:
-          registration.createdAt,
+        department: registration.department,
+        createdAt: registration.createdAt,
       },
     });
   } catch (error) {

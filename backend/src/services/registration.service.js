@@ -24,9 +24,23 @@ const generateRegistrationId = async () => {
 };
 
 export const createRegistration = async (registrationData) => {
-  const { name, rollNumber, year, department } = registrationData;
+  const {
+    name,
+    email,
+    mobileNumber,
+    rollNumber,
+    year,
+    department,
+  } = registrationData;
 
-  const normalizedRollNumber = rollNumber.trim().toUpperCase();
+  const normalizedRollNumber =
+    rollNumber.trim().toUpperCase();
+
+  const normalizedEmail =
+    email.trim().toLowerCase();
+
+  const normalizedMobileNumber =
+    mobileNumber.trim();
 
   const existingRegistration = await Registration.findOne({
     rollNumber: normalizedRollNumber,
@@ -38,7 +52,6 @@ export const createRegistration = async (registrationData) => {
     );
 
     error.statusCode = 409;
-
     throw error;
   }
 
@@ -47,18 +60,25 @@ export const createRegistration = async (registrationData) => {
   try {
     const registration = await Registration.create({
       registrationId,
+
       name: name.trim(),
+
+      email: normalizedEmail,
+
+      mobileNumber: normalizedMobileNumber,
+
       rollNumber: normalizedRollNumber,
+
       year: year.trim(),
+
       department: department.trim(),
     });
 
     return registration;
   } catch (error) {
     if (error.code === 11000) {
-      const duplicateField = Object.keys(
-        error.keyPattern || {}
-      )[0];
+      const duplicateField =
+        Object.keys(error.keyPattern || {})[0];
 
       if (duplicateField === "rollNumber") {
         const duplicateError = new Error(
@@ -66,7 +86,6 @@ export const createRegistration = async (registrationData) => {
         );
 
         duplicateError.statusCode = 409;
-
         throw duplicateError;
       }
 
@@ -76,7 +95,6 @@ export const createRegistration = async (registrationData) => {
         );
 
         duplicateError.statusCode = 500;
-
         throw duplicateError;
       }
     }
@@ -131,7 +149,7 @@ export const getRegistrationByRollNumber = async (
     rollNumber: normalizedRollNumber,
   })
     .select(
-      "registrationId name rollNumber year department createdAt"
+      "registrationId name email mobileNumber rollNumber year department createdAt"
     )
     .lean();
 
@@ -168,7 +186,7 @@ export const getRegistrationStatusByRollNumber = async (
     rollNumber: normalizedRollNumber,
   })
     .select(
-      "registrationId name rollNumber year department createdAt"
+      "registrationId name email mobileNumber rollNumber year department createdAt"
     )
     .lean();
 
@@ -203,24 +221,24 @@ export const getRegistrationStatusByRollNumber = async (
 
     abstract: abstractSubmission
       ? {
-          submitted: true,
-          abstractTitle:
-            abstractSubmission.abstractTitle,
-          status: abstractSubmission.status,
-          rejectionReason:
-            abstractSubmission.rejectionReason,
-          createdAt:
-            abstractSubmission.createdAt,
-          reviewedAt:
-            abstractSubmission.reviewedAt,
-        }
+        submitted: true,
+        abstractTitle:
+          abstractSubmission.abstractTitle,
+        status: abstractSubmission.status,
+        rejectionReason:
+          abstractSubmission.rejectionReason,
+        createdAt:
+          abstractSubmission.createdAt,
+        reviewedAt:
+          abstractSubmission.reviewedAt,
+      }
       : {
-          submitted: false,
-          abstractTitle: null,
-          status: null,
-          rejectionReason: null,
-          createdAt: null,
-          reviewedAt: null,
-        },
+        submitted: false,
+        abstractTitle: null,
+        status: null,
+        rejectionReason: null,
+        createdAt: null,
+        reviewedAt: null,
+      },
   };
 };
