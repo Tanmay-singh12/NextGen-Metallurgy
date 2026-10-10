@@ -14,7 +14,10 @@ export default function Speakers() {
         <div className="speaker-grid">
           {speakers.map(s => (
             <article className="speaker" key={s.name}>
-              <div className={'avatar ' + s.tone}>{s.initials}<span></span></div>
+              <div className={'avatar ' + s.tone}>
+                <img src={s.image} alt={s.name} loading="lazy" />
+                <span className="avatar-initials">{s.initials}</span>
+              </div>
               <div><h3>{s.name}</h3><p>{s.role}<br />{s.org}</p></div>
               <button aria-label={'View ' + s.name}><ArrowUpRight size={16} /></button>
             </article>

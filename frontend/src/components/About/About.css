@@ -1,27 +1,44 @@
+.about-section {
+    padding-top: 56px;
+    padding-bottom: 0;
+}
+
 .about {
     display: grid;
     grid-template-columns: 1fr 1.1fr;
     gap: 10%;
-    align-items: center
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 46px;
 }
 
 .about-visual {
     min-height: 420px;
     background: #d6eee1;
-    border-radius: 3px;
+    border-radius: var(--radius);
     position: relative;
     overflow: hidden
 }
 
-.metal-disc {
-    width: 300px;
-    height: 300px;
+.about-photo {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    right: -70px;
-    bottom: -75px;
-    border-radius: 50%;
-    background: repeating-radial-gradient(circle at 46% 43%, #9acdbb 0 3px, #4e9d88 4px 6px, #dce9aa 7px 8px);
-    box-shadow: inset 10px 9px 26px #125b4b55
+    inset: 0;
+    object-fit: cover;
+    display: block;
+    transition: .5s transform ease;
+}
+
+.about-visual:hover .about-photo {
+    transform: scale(1.04);
+}
+
+.about-visual:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(195deg, transparent 45%, #0b2a2180 100%);
 }
 
 .visual-card {
@@ -44,10 +61,11 @@
 
 .about-caption {
     position: absolute;
+    z-index: 2;
     bottom: 35px;
     left: 42px;
     font: 10px/1.6 var(--mono);
-    color: #2d7664
+    color: #eaf5ef
 }
 
 .about-copy .section-head {
@@ -61,54 +79,240 @@
     margin: 25px 0
 }
 
-.mission {
+/* =========================
+   QUICK-FACT STRIP
+   (Coalescence brochure: dates / venue / arc / audience)
+   ========================= */
+
+.fact-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 26px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+}
+
+.fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    min-width: 150px;
+}
+
+.fact svg {
+    color: var(--green);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.fact div {
+    display: grid;
+    gap: 2px;
+}
+
+.fact b {
+    font-size: 12px;
+    color: var(--ink);
+    letter-spacing: -.01em;
+}
+
+.fact span {
+    font-size: 10px;
+    color: var(--muted);
+}
+
+/* =========================
+   "THREE DAYS. MANY WAYS TO ENGAGE."
+   Horizontally scrollable day cards — a deliberate scroll affordance,
+   snaps card-to-card so it never rests half-way through one.
+   ========================= */
+
+.engage-wrap {
+    padding-top: 10px;
+    padding-bottom: 46px;
+}
+
+.engage-eyebrow {
+    font-family: var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: var(--green);
+    margin: 0 0 12px;
+    font-weight: 500;
+}
+
+.engage-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.25;
+    max-width: 650px;
+    margin: 0 0 32px;
+    color: var(--ink);
+}
+
+.day-scroller {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    margin: 0 -4px;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+}
+
+.day-scroller::-webkit-scrollbar {
+    height: 6px;
+}
+
+.day-scroller::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 99px;
+}
+
+.day-card {
+    scroll-snap-align: start;
+    flex: 0 0 min(310px, 78vw);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 24px 24px;
+    transition: .3s transform, .3s box-shadow;
+}
+
+.day-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 38px #123c2e14;
+}
+
+.day-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--green);
+}
+
+.day-tag {
+    font: 700 11px var(--mono);
+    letter-spacing: .08em;
+    color: var(--muted);
+}
+
+.day-card h4 {
+    margin: 14px 0 14px;
+    font-size: 21px;
+    letter-spacing: -.02em;
+}
+
+.day-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.day-card li {
+    font-size: 12.5px;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+}
+
+.day-card li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--lime);
+}
+
+/* =========================
+   WHY JOIN — PILLARS
+   (replaces the old generic mission row with the brochure's own points)
+   ========================= */
+
+.pillars {
     display: flex;
     gap: 25px;
     border-top: 1px solid var(--line);
-    padding-top: 22px
+    padding-top: 26px;
+    padding-bottom: 50px;
 }
 
-.mission div {
+.pillars .pillar {
     display: grid;
-    gap: 5px;
+    gap: 6px;
     flex: 1;
     font-size: 11px;
-    color: var(--muted)
+    color: var(--muted);
 }
 
-.mission svg {
+.pillars svg {
     color: var(--green);
-    width: 19px
+    width: 19px;
 }
 
-.mission b {
+.pillars b {
     color: var(--ink);
-    font-size: 12px
+    font-size: 12.5px;
 }
 
 @media (max-width:820px) {
+    .about-section {
+        padding-top: 40px;
+    }
+
     .about {
         grid-template-columns: 1fr;
-        gap: 45px;
-         padding-top: 25px;
-         padding-bottom: 25px;
+        gap: 36px;
+        padding-top: 0;
+        padding-bottom: 36px;
     }
 
     .about-visual {
         min-height: 345px
     }
+
+    .engage-wrap {
+        padding-top: 0;
+        padding-bottom: 36px;
+    }
+
+    .engage-title {
+        margin-bottom: 24px;
+    }
+
+    .pillars {
+        flex-direction: column;
+        gap: 16px;
+        padding-bottom: 36px;
+    }
 }
 
 @media (max-width:500px) {
-    .mission {
-        gap: 11px
+    .fact-strip {
+        gap: 14px 18px;
     }
-    
-    .mission span {
-        font-size: 10px
+
+    .fact {
+        min-width: 130px;
     }
-    
+
+    .day-card {
+        flex-basis: 82vw;
+        padding: 22px 20px 20px;
+    }
 }
+
 .mobile-hide-image {
   display: block;
 }
@@ -117,6 +321,4 @@
   .mobile-hide-image {
     display: none;
   }
-  
-  
 }

@@ -1,18 +1,44 @@
 
 .hero {
-  min-height: 540px;
+  min-height: 560px;
   position: relative;
   overflow: hidden;
 
-  display: grid;
-  grid-template-columns: 1.05fr .95fr;
-
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 
-  padding: 0px max(30px,calc((100vw - 1180px)/2)) 80px;
-  
-
+  padding: 90px max(30px,calc((100vw - 1180px)/2)) 90px;
 }
+
+/* Dark navy/charcoal treatment, scoped to the shared top banner (Navbar +
+   SymposiumHeader + Hero). The rest of the site (About, Events, etc.)
+   keeps the existing light palette untouched. The background itself now
+   lives on .top-banner (see global.css) so it reads as one continuous
+   surface behind the logo, title and headline rather than separate
+   colored blocks. */
+.hero.hero--metal h1{
+  color:#eef3f6;
+}
+.hero--metal .hero-text{
+  color:#aebcc7;
+}
+.hero--metal .eyebrow{
+  color:#8fb9cf;
+}
+.hero--metal .text-button{
+  color:#dfe9f0;
+  border-bottom-color:#3c4c59;
+}
+.hero--metal .scroll-note{
+  color:#7f93a3;
+}
+.hero--metal .scroll-note span{
+  background:#44566484;
+}
+
 .grain{
   position:absolute;
   inset:0;
@@ -25,7 +51,8 @@
 .hero-copy{
   position:relative;
   z-index:1;
-  max-width:645px
+  max-width:760px;
+  margin:0 auto;
 }
 
 .hero h1 {
@@ -49,16 +76,18 @@
 
 .hero-text{
   color:#53635d;
-  max-width:470px;
+  max-width:560px;
   line-height:1.75;
   font-size:15px;
-  margin:27px 0
+  margin:27px auto
 }
 
 .hero-actions{
   display:flex;
   gap:22px;
-  align-items:center
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
 }
 
 .text-button{
@@ -74,134 +103,14 @@
 }
 
 /* =========================
-   HERO IMAGE
-   ========================= */
-
-.hero-sculpture{
-  position:relative;
-  margin:0;
-  height:460px;
-  z-index:1;
-  display:grid;
-  place-items:center;
-  overflow:visible;
-  perspective:1200px;
-  isolation:isolate;
-}
-
-.hero-sculpture img{
-  position:relative;
-  z-index:2;
-
-  /* Smaller desktop image */
-  width:min(390px, 82%);
-  height:auto;
-  max-height:430px;
-
-  object-fit:contain;
-  mix-blend-mode:screen;
-
-  filter:
-    contrast(1.06)
-    saturate(1.04)
-    drop-shadow(0 22px 22px rgba(7,75,62,.18));
-
-  transform-origin:50% 52%;
-  animation:sculptureDrift 8s ease-in-out infinite;
-  will-change:transform;
-}
-
-.sculpture-glow{
-  position:absolute;
-  z-index:1;
-  width:48%;
-  aspect-ratio:1;
-  border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      rgba(117,210,181,.48),
-      rgba(179,229,211,.13) 46%,
-      transparent 70%
-    );
-  filter:blur(8px);
-  animation:glowBreathe 8s ease-in-out infinite;
-}
-
-.hero-sculpture figcaption{
-  position:absolute;
-  z-index:3;
-  right:5px;
-  bottom:28px;
-  padding:9px 11px;
-  color:#0a5c4d;
-  background:rgba(255,255,255,.87);
-  border:1px solid rgba(218,235,226,.9);
-  border-radius:8px;
-  font:8px var(--mono);
-  letter-spacing:.04em;
-  box-shadow:0 12px 25px rgba(10,74,61,.11)
-}
-
-
-/* =========================
-   HERO MARK
-   ========================= */
-
-.hero-mark{
-  position:absolute;
-  z-index:5;
-  right:188px;
-  top:183px;
-  width:88px;
-  height:88px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  color:#075c4d;
-  background:rgba(255,255,255,.84);
-  border:1px solid rgba(255,255,255,.94);
-  box-shadow:
-    0 16px 30px rgba(16,76,61,.19),
-    inset 0 0 0 7px rgba(205,237,224,.68);
-  backdrop-filter:blur(6px);
-  animation:heroMarkFloat 5s ease-in-out infinite;
-}
-
-.hero-mark svg{
-  position:relative;
-  z-index:2;
-  filter:drop-shadow(0 2px 1px rgba(7,92,77,.12))
-}
-
-.hero-mark-orbit{
-  position:absolute;
-  width:64px;
-  height:20px;
-  border:2px solid #58a88e;
-  border-radius:50%;
-  transform:rotate(-28deg);
-  animation:markSpin 8s linear infinite
-}
-
-.hero-mark:after{
-  content:"MME";
-  position:absolute;
-  bottom:9px;
-  font:7px var(--mono);
-  letter-spacing:.14em;
-  color:#39816d
-}
-
-
-/* =========================
    OTHER HERO ELEMENTS
    ========================= */
 
 .scroll-note{
   position:absolute;
   bottom:28px;
-  left:max(30px,calc((100vw - 1180px)/2));
+  left:50%;
+  transform:translateX(-50%);
   font:9px var(--mono);
   letter-spacing:.1em;
   color:#7c8a84;
@@ -262,57 +171,6 @@
 .stats small{
   color:var(--muted);
   font-size:10px
-}
-
-
-/* =========================
-   ANIMATIONS
-   ========================= */
-
-@keyframes markSpin{
-  to{
-    transform:translate(-50%,-50%) rotate(390deg)
-  }
-}
-
-@keyframes heroMarkFloat{
-  0%,100%{
-    transform:translateY(0) rotate(0)
-  }
-
-  50%{
-    transform:translateY(-10px) rotate(5deg)
-  }
-}
-
-@keyframes sculptureDrift{
-  0%,100%{
-    transform:
-      translate3d(0,0,0)
-      rotateX(1deg)
-      rotateY(-7deg)
-      rotateZ(-2deg)
-  }
-
-  50%{
-    transform:
-      translate3d(0,-14px,8px)
-      rotateX(-5deg)
-      rotateY(8deg)
-      rotateZ(2deg)
-  }
-}
-
-@keyframes glowBreathe{
-  0%,100%{
-    transform:scale(.9);
-    opacity:.58
-  }
-
-  50%{
-    transform:scale(1.13);
-    opacity:.92
-  }
 }
 
 
@@ -387,25 +245,14 @@
   .hero {
     min-height: auto;
     text-align: center;
-    padding: 22px 45px;
-    padding-top: 0px;
-    align-items: center;
+    padding: 22px 45px 40px;
   }
 
   .hero-copy {
-    padding-top: 0;
-    margin-left: 45px;
-  }
-
-  .hero-sculpture {
-    display: none;
+    margin: 0 auto;
   }
 
   .scroll-note {
-    display: none;
-  }
-
-  .hero-mark {
     display: none;
   }
 
@@ -456,10 +303,6 @@
 }
 @media (max-width:500px){
 
-  
-    .pawar{
-        margin-left: 35px;
-    }
   .hero-text{
     font-size:13px
   }
@@ -490,37 +333,4 @@
     text-align: center;
     line-height: .94;
   }
-}
-
-/* Reduced motion */
-
-@media (prefers-reduced-motion:reduce){
-
-  .hero-sculpture img,
-  .sculpture-glow,
-  .hero-mark{
-    animation:none !important
-  }
-}
-.hero-copy {
-  position: relative;
-  z-index: 1;
-  max-width: 645px;
-
-  
-}
-.hero h1 {
-  letter-spacing: -.052em;
-  line-height: .98;
-  margin: 0;
-
-  font-size: clamp(46px, 5.4vw, 78px);
-
-  font-weight: 800;
-
-  color: var(--ink);
-}
-.hero h1 i {
-  font-family: var(--serif);
-  font-weight: 600;
 }

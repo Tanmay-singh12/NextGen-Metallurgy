@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import Navbar from "../components/Navbar/Navbar";
-import Hero from "../components/Hero/Hero";
+import Hero, { HeroIntro } from "../components/Hero/Hero";
 import About from "../components/About/About";
-import Events from "../components/Events/Events";
-import Feature from "../components/Feature/Feature";
+import OurVoice from "../components/OurVoice/OurVoice";
+import Faculty from "../components/Faculty/Faculty";
 import Schedule from "../components/Schedule/Schedule";
 import Speakers from "../components/Speakers/Speakers";
 import Gallery from "../components/Gallery/Gallery";
@@ -15,6 +15,7 @@ import Contact from "../components/Contact/Contact";
 import Footer from "../components/Footer/Footer";
 
 import SymposiumHeader from "../components/SymposiumHeader/SymposiumHeader";
+import HeroBackground from "../components/HeroBackground/HeroBackground";
 
 import RegistrationModal from "../components/RegistrationModal/RegistrationModal";
 import AbstractSubmissionModal from "../components/abstract/AbstractSubmissionModal";
@@ -40,6 +41,22 @@ export default function Home() {
     setAbstractOpen(false);
     setAbstractRegistrationId(null);
   };
+
+  // Drive the top scroll-progress bar via a CSS variable (cheaper than a
+  // React state update on every scroll frame).
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      h.style.setProperty("--scroll-progress", pct + "%");
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Fade sections in as they scroll into view.
   useEffect(() => {
@@ -110,6 +127,8 @@ export default function Home() {
 
   return (
     <>
+      <div className="scroll-progress" aria-hidden="true"></div>
+
       <Navbar
         menu={menu}
         setMenu={setMenu}
@@ -117,23 +136,31 @@ export default function Home() {
         onRegister={openRegistration}
       />
 
-      <SymposiumHeader />
-
       <main id="top">
-        <Hero
-          jump={jump}
-          onRegister={openRegistration}
-        />
+        {/* SymposiumHeader + Hero share one continuous dark/animated
+           banner (single background behind both), so the logo, title
+           and headline all sit on the same surface rather than two
+           separately-colored sections. */}
+        <div className="top-banner">
+          <HeroBackground />
+          <SymposiumHeader />
+          <Hero
+            jump={jump}
+            onRegister={openRegistration}
+          />
+        </div>
+
+        <HeroIntro />
 
         <About />
 
-        <Events jump={jump} />
-
-        <Feature jump={jump} />
+        <Speakers />
 
         <Schedule />
 
-        <Speakers />
+        <OurVoice />
+
+        <Faculty />
 
         <Gallery onSelect={setLightbox} />
 

@@ -9,7 +9,6 @@ import "./Navbar.css";
 
 const nav = [
   "About",
-  "Events",
   "Schedule",
   "Gallery",
   "Team",

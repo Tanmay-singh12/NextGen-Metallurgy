@@ -13,14 +13,19 @@ export default function SymposiumHeader() {
       </div>
 
       <div className="symposium-title">
-        
+
 
         <h2>COALESCENCE</h2>
 
         <span className="symposium-line"></span>
       </div>
 
-      
+      <div className="symposium-logo symposium-logo-right">
+        <img
+          src="/assets/department-logo.png"
+          alt="Department of Metallurgical and Materials Engineering"
+        />
+      </div>
 
     </section>
   );

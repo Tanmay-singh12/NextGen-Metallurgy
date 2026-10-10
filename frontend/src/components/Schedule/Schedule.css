@@ -1,4 +1,5 @@
-.schedule .section-head{margin-bottom:42px}
+.schedule .section-head{margin-bottom:26px}
+.schedule.wrap,.schedule .wrap{padding-top:50px}
 .day-tabs{border-bottom:1px solid var(--line);display:flex;gap:30px}
 .day-tabs button{padding:14px 0;background:none;color:var(--muted);font:11px var(--mono);position:relative}
 .day-tabs .active{color:var(--green);font-weight:600}

@@ -1,6 +1,8 @@
+// Temporary/random placeholder photography — swap the `image` URLs for
+// real speaker photos later.
 export const speakers = [
-  {name:'Dr. Meera Narayan', role:'Chief Scientist', org:'Tata Steel Research', initials:'MN', tone:'speaker-one'},
-  {name:'Prof. Arjun Banerjee', role:'Professor of Materials', org:'IIT Kanpur', initials:'AB', tone:'speaker-two'},
-  {name:'Nisha Iyer', role:'Co-founder & CEO', org:'Re-Metal Labs', initials:'NI', tone:'speaker-three'},
-  {name:'Karthik Rao', role:'Director, Advanced Materials', org:'Mahindra Research', initials:'KR', tone:'speaker-four'}
+  { name: 'Dr. Shashank Garg', role: 'alumnus of the 1996', org: 'Co-Founder & CEO of Infocepts', initials: 'SG', tone: 'speaker-one', image: "/assets/shashank-garg.png" },
+  { name: 'Dr. Somnath Bhattacharyya', role: 'Professor of Materials', org: 'IIT Madras', initials: 'SM', tone: 'speaker-two', image: "/assets/somnathbhattacharye.png" },
+  { name: 'Dr. Akshay Ashirgade', role: 'alumnus of the 2003', org: 'Indian-American materials scientist', initials: 'AA', tone: 'speaker-three', image: "/assets/Dr-Akshay-Ashirgade.png" },
+  { name: 'Dr. BS Murthy', role: 'alumnus of the 1986', org: 'Director of IIT Hyderabad', initials: 'BM', tone: 'speaker-four', image: "/assets/budaraju-srinivasa-murty.png" },
 ];

@@ -4,9 +4,8 @@ import "./Hero.css";
 
 export default function Hero({ jump, onRegister }) {
   return (
-    <>
-      <section className="hero">
-        <div className="grain"></div>
+    <section className="hero hero--metal">
+      <div className="grain"></div>
 
         <div className="hero-copy">
           <p className="eyebrow aryan">
@@ -44,53 +43,46 @@ export default function Hero({ jump, onRegister }) {
           </div>
         </div>
 
-        <figure className="hero-art hero-sculpture">
-          <div className="sculpture-glow"></div>
-
-          <img
-            src="/assets/metallum-sculpture.png"
-            alt="Floating teal glass crystal lattice, silver ribbon and copper sphere"
-          />
-
-          <figcaption>
-            Metallum / a study in motion
-          </figcaption>
-        </figure>
-
         <div className="scroll-note">
           SCROLL TO DISCOVER <span></span>
         </div>
-      </section>
+    </section>
+  );
+}
 
-      <section className="intro">
-        <p>
-          Hosted by the Department of Metallurgical & Materials Engineering
-        </p>
+// Stats strip just below the hero. Kept as its own sibling export (not
+// nested inside Hero's own section) so it stays a plain light-themed
+// block, outside the dark hero banner, exactly as before.
+export function HeroIntro() {
+  return (
+    <section className="intro">
+      <p>
+        Hosted by the Department of Metallurgical & Materials Engineering
+      </p>
 
-        <div className="stats">
-          <div>
-            <b>
-              600<span>+</span>
-            </b>
-            <small>curious minds</small>
-          </div>
-
-          <div>
-            <b>18</b>
-            <small>voices on stage</small>
-          </div>
-
-          <div>
-            <b>12</b>
-            <small>hands-on sessions</small>
-          </div>
-
-          <div>
-            <b>08</b>
-            <small>institutions together</small>
-          </div>
+      <div className="stats">
+        <div>
+          <b>
+            600<span>+</span>
+          </b>
+          <small>curious minds</small>
         </div>
-      </section>
-    </>
+
+        <div>
+          <b>18</b>
+          <small>voices on stage</small>
+        </div>
+
+        <div>
+          <b>12</b>
+          <small>hands-on sessions</small>
+        </div>
+
+        <div>
+          <b>08</b>
+          <small>institutions together</small>
+        </div>
+      </div>
+    </section>
   );
 }

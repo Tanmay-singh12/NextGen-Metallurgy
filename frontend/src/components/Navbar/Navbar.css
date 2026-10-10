@@ -1,13 +1,21 @@
-.nav{height:76px;position:sticky;top:0;z-index:20;padding:0 max(30px,calc((100vw - 1180px)/2));display:flex;align-items:center;justify-content:space-between;background:rgba(251,252,249,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(22,38,33,.08)}
-.brand{font-weight:800;font-size:15px;letter-spacing:.06em;display:flex;gap:10px;align-items:center}
-.brand small{display:block;font-family:var(--mono);font-weight:400;font-size:8px;letter-spacing:.14em;color:var(--muted);margin-top:2px}
+/* Navbar is sticky, so it needs its own solid background that holds up
+   wherever it ends up sitting (over the dark top banner on load, over
+   light sections once scrolled) — same dark tone as .top-banner's
+   gradient start, so the two read as one continuous surface at the top
+   of the page. */
+.nav{height:76px;position:sticky;top:0;z-index:20;padding:0 max(30px,calc((100vw - 1180px)/2));display:flex;align-items:center;justify-content:space-between;background:#101a24;backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+.brand{font-weight:800;font-size:15px;letter-spacing:.06em;display:flex;gap:10px;align-items:center;color:var(--lime)}
+.brand small{display:block;font-family:var(--mono);font-weight:400;font-size:8px;letter-spacing:.14em;color:#7f93a3;margin-top:2px}
 .brand-mark{display:inline-grid;place-items:center;width:35px;height:35px;background:var(--green);color:white;border-radius:11px}
 .nav nav{display:flex;gap:25px}
-.nav nav button{background:none;color:#42534d;font-size:12px;font-weight:600}
-.nav nav button:hover{color:var(--green)}
+.nav nav button{background:none;color:#c3d2db;font-size:12px;font-weight:600}
+.nav nav button:hover{color:var(--lime)}
 .mini{padding:10px 15px;font-size:11px}
 .menu,.mobile-nav{display:none}
-@media (max-width:820px){.nav{height:66px;padding:0 20px}.nav nav,.nav .mini{display:none}.menu{display:block;background:none;color:var(--ink);padding:5px}.mobile-nav{z-index:19;position:fixed;top:66px;left:0;right:0;padding:16px 20px 22px;background:#fbfcf9;border-bottom:1px solid var(--line);box-shadow:0 15px 20px #163c2c0c;display:grid;gap:3px}}
+.menu{color:#dfe9f0}
+@media (max-width:820px){.nav{height:66px;padding:0 20px;backdrop-filter:blur(8px)}.nav nav,.nav .mini{display:none}.menu{display:block;background:none;padding:5px}.mobile-nav{z-index:19;position:fixed;top:66px;left:0;right:0;padding:16px 20px 22px;background:#101a24;border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 15px 20px #0008;display:grid;gap:3px;animation:navDropIn .18s ease}.mobile-nav button{min-height:44px;color:#dfe9f0}.mobile-nav button.register{color:#fff}}
+@keyframes navDropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mobile-nav{animation:none}}
 @media (max-width:500px){.brand{font-size:13px}}
 .brand-mark{position: relative; overflow: hidden; isolation: isolate; transition: transform .3s ease, box-shadow .3s ease;}
 .brand-mark svg{position: relative; z-index: 2;}
