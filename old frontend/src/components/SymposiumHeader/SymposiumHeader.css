@@ -1,0 +1,205 @@
+.symposium-header {
+  width: 100%;
+  min-height: 125px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  padding: 18px max(30px, calc((100vw - 1180px) / 2));
+
+  background: var(--paper);
+
+  border-bottom: none;
+
+  position: relative;
+  z-index: 10;
+}
+
+
+/* =========================
+   LOGOS
+   ========================= */
+
+.symposium-logo {
+  display: flex;
+  align-items: center;
+}
+
+.symposium-logo-left {
+  justify-content: flex-start;
+}
+
+.symposium-logo-right {
+  justify-content: flex-end;
+}
+.symposium-logo img {
+  width: auto;
+  height: 80px;
+  max-width: 150px;
+  object-fit: contain;
+}
+
+
+/* =========================
+   CENTER TITLE
+   ========================= */
+
+.symposium-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 0 35px;
+}
+
+.symposium-kicker {
+  font-family: var(--mono);
+
+  font-size: 8px;
+  font-weight: 500;
+
+  letter-spacing: .18em;
+
+  color: var(--green);
+
+  margin-bottom: 5px;
+}
+
+.symposium-title h2 {
+  margin: 0;
+
+  font-family: var(--sans);
+
+  font-size: clamp(38px, 4vw, 52px);
+
+  font-weight: 800;
+
+  letter-spacing: .045em;
+
+  line-height: 1;
+
+  color: var(--ink);
+}
+
+.symposium-line {
+  width: 42px;
+  height: 2px;
+
+  background: var(--green);
+
+  margin-top: 10px;
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 820px) {
+
+  .symposium-header {
+    min-height: 105px;
+    height: 105px;
+    padding: 16px 20px 14px 0px;
+
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    justify-content: center;
+    align-items: center;
+
+    gap: 7px;
+  }
+
+  /* VNIT logo */
+  .symposium-logo-left {
+    order: 1;
+    
+    justify-content: center;
+  }
+
+  .symposium-logo-left img {
+    height: 38px;
+    width: auto;
+    max-width: 85px;
+
+    object-fit: contain;
+  }
+
+  /* Symposium text */
+  .symposium-title {
+    order: 2;
+
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .symposium-kicker {
+    display: none;
+  }
+
+  .symposium-title h2 {
+    font-size: 45px;
+
+    letter-spacing: .04em;
+
+    line-height: 1;
+
+    color: var(--ink);
+  }
+
+  .symposium-line {
+    width: 30px;
+    height: 2px;
+
+    margin-top: 6px;
+  }
+
+  /* Hide the branch logo on mobile */
+  .symposium-logo-right {
+    display: none;
+  }
+}
+/* =========================
+   SMALL PHONES
+   ========================= */
+
+@media (max-width: 500px) {
+
+  .symposium-header {
+    min-height: 82px;
+    margin-bottom: 30px;
+    padding: 11px 14px;
+  }
+
+  .symposium-logo img {
+    height: 70px;
+    max-width: 78px;
+  }
+
+  .symposium-title {
+    padding: 0 8px;
+  }
+
+  .symposium-kicker {
+    display: none;
+  }
+
+  .symposium-title h2 {
+    font-size: 29px;
+    letter-spacing: .05em;
+  }
+
+  .symposium-line {
+    width: 24px;
+    height: 1px;
+    margin-top: 6px;
+  }
+}

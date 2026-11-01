@@ -1,0 +1,5 @@
+export const schedule = [
+ [{time:'09:00', title:'Welcome & registration', meta:'Atrium · Tea & networking', kind:'Open'}, {time:'10:30', title:'Materials at the Edge', meta:'Main Auditorium · Dr. Meera Narayan', kind:'Panel'}, {time:'14:00', title:'Characterisation Lab', meta:'MME Labs · Limited seats', kind:'Workshop'}, {time:'17:00', title:'Faculty & industry mixer', meta:'Terrace Garden', kind:'Social'}],
+ [{time:'09:30', title:'Future Materials keynote', meta:'Main Auditorium · Prof. A. Banerjee', kind:'Keynote'}, {time:'11:15', title:'Circular Metals, Real Impact', meta:'Seminar Hall', kind:'Seminar'}, {time:'15:30', title:'The Alloy Challenge', meta:'Innovation Studio', kind:'Competition'}, {time:'18:00', title:'Exhibition walkthrough', meta:'Atrium Gallery', kind:'Open'}],
+ [{time:'10:00', title:'Women in Materials', meta:'Main Auditorium', kind:'Panel'}, {time:'13:30', title:'Build with Biomaterials', meta:'Design Lab', kind:'Workshop'}, {time:'16:00', title:'Closing & awards', meta:'Main Auditorium', kind:'Open'}]
+];
