@@ -1,4 +1,3 @@
-
 import AbstractSubmission from "../models/AbstractSubmission.js";
 
 const normalizeRegistrationId = (value) =>
@@ -14,7 +13,7 @@ const findSubmissionForReview = async (registrationId) => {
 const updateReviewStatus = async (
   registrationId,
   status,
-  rejectionReason = null
+  rejectionReason = null,
 ) => {
   return AbstractSubmission.findOneAndUpdate(
     {
@@ -29,13 +28,11 @@ const updateReviewStatus = async (
       },
     },
     {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
-    }
+    },
   )
-    .select(
-      "-photos.data -abstractFile.data -paymentScreenshot.data"
-    )
+    .select("-photos.data -abstractFile.data -paymentScreenshot.data")
     .lean();
 };
 
@@ -57,9 +54,7 @@ const handleReviewError = async (res, registrationId) => {
 
 export const approveAbstract = async (req, res, next) => {
   try {
-    const registrationId = normalizeRegistrationId(
-      req.params.registrationId
-    );
+    const registrationId = normalizeRegistrationId(req.params.registrationId);
 
     if (!registrationId || registrationId.length > 100) {
       return res.status(400).json({
@@ -68,10 +63,7 @@ export const approveAbstract = async (req, res, next) => {
       });
     }
 
-    const submission = await updateReviewStatus(
-      registrationId,
-      "APPROVED"
-    );
+    const submission = await updateReviewStatus(registrationId, "APPROVED");
 
     if (!submission) {
       return await handleReviewError(res, registrationId);
@@ -89,9 +81,7 @@ export const approveAbstract = async (req, res, next) => {
 
 export const rejectAbstract = async (req, res, next) => {
   try {
-    const registrationId = normalizeRegistrationId(
-      req.params.registrationId
-    );
+    const registrationId = normalizeRegistrationId(req.params.registrationId);
 
     if (!registrationId || registrationId.length > 100) {
       return res.status(400).json({
@@ -122,7 +112,7 @@ export const rejectAbstract = async (req, res, next) => {
     const submission = await updateReviewStatus(
       registrationId,
       "REJECTED",
-      rejectionReason
+      rejectionReason,
     );
 
     if (!submission) {
